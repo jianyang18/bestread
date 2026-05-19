@@ -1,5 +1,6 @@
 import './globals.css';
 import {Toaster} from 'sonner';
+import {Analytics} from '@vercel/analytics/next';
 
 export const metadata = {
 	title: {default: 'bestRead | minimalist reading tracker', template: '%s | bestRead'},
@@ -23,6 +24,7 @@ export default function RootLayout({children}) {
 					<main className="max-w-2xl mx-auto w-full space-y-8">{children}</main>
 				</div>
 				<Toaster theme="system" />
+				<Analytics />
 			</body>
 		</html>
 	);

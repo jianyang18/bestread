@@ -2,49 +2,58 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* naive line-doodle look: one pen, lots of paper, one accent (tea amber) */
 :root {
 	--background: 0 0% 100%;
-	--foreground: 240 10% 3.9%;
+	--foreground: 0 0% 0%; /* ink: line art + display lettering */
+	--text: 0 0% 26.7%; /* #444 body */
 	--card: 0 0% 100%;
-	--card-foreground: 240 10% 3.9%;
+	--card-foreground: 0 0% 0%;
 	--popover: 0 0% 100%;
-	--popover-foreground: 240 10% 3.9%;
-	--primary: 240 5.9% 10%;
-	--primary-foreground: 0 0% 98%;
-	--secondary: 240 4.8% 95.9%;
-	--secondary-foreground: 240 5.9% 10%;
-	--muted: 240 4.8% 95.9%;
-	--muted-foreground: 240 3.8% 46.1%;
-	--accent: 240 4.8% 95.9%;
-	--accent-foreground: 240 5.9% 10%;
-	--destructive: 0 84.2% 60.2%;
-	--destructive-foreground: 0 0% 98%;
-	--border: 240 5.9% 90%;
-	--input: 240 5.9% 90%;
-	--ring: 240 5.9% 10%;
+	--popover-foreground: 0 0% 0%;
+	--primary: 0 0% 0%;
+	--primary-foreground: 0 0% 100%;
+	--secondary: 60 7% 95%; /* #f4f4f2 quiet panel */
+	--secondary-foreground: 0 0% 0%;
+	--muted: 60 7% 95%;
+	--muted-foreground: 0 0% 46.3%; /* #767676, do not go lighter */
+	--accent: 60 7% 95%;
+	--accent-foreground: 0 0% 0%;
+	--doodle: 36 79% 57%; /* #e8a33d, the one accent */
+	--destructive: 6 63% 46%;
+	--destructive-foreground: 0 0% 100%;
+	--border: 60 5% 88%;
+	--input: 0 0% 46.3%;
+	--ring: 0 0% 0%;
 	--radius: 0rem;
+	--wavy-muted: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 8' preserveAspectRatio='none'%3E%3Cpath d='M1.5 4.6C40 3 70 6.2 118 4.4S205 2.6 240 4.8 285 4.2 298.5 3.4' fill='none' stroke='%23767676' stroke-width='1.5' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+	--wavy-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 8' preserveAspectRatio='none'%3E%3Cpath d='M1.5 4.6C40 3 70 6.2 118 4.4S205 2.6 240 4.8 285 4.2 298.5 3.4' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
 }
 
 .dark {
-	--background: 240 10% 3.9%;
-	--foreground: 0 0% 98%;
-	--card: 240 10% 3.9%;
-	--card-foreground: 0 0% 98%;
-	--popover: 240 10% 3.9%;
-	--popover-foreground: 0 0% 98%;
-	--primary: 0 0% 98%;
-	--primary-foreground: 240 5.9% 10%;
-	--secondary: 240 3.7% 15.9%;
-	--secondary-foreground: 0 0% 98%;
-	--muted: 240 3.7% 15.9%;
-	--muted-foreground: 240 5% 64.9%;
-	--accent: 240 3.7% 15.9%;
-	--accent-foreground: 0 0% 98%;
-	--destructive: 0 62.8% 30.6%;
-	--destructive-foreground: 0 0% 98%;
-	--border: 240 3.7% 15.9%;
-	--input: 240 3.7% 15.9%;
-	--ring: 240 4.9% 83.9%;
+	--background: 60 3% 8%;
+	--foreground: 50 13% 92%;
+	--text: 51 6% 77%;
+	--card: 60 3% 8%;
+	--card-foreground: 50 13% 92%;
+	--popover: 60 3% 8%;
+	--popover-foreground: 50 13% 92%;
+	--primary: 50 13% 92%;
+	--primary-foreground: 60 3% 8%;
+	--secondary: 60 3% 12%;
+	--secondary-foreground: 50 13% 92%;
+	--muted: 60 3% 12%;
+	--muted-foreground: 51 3% 60%;
+	--accent: 60 3% 12%;
+	--accent-foreground: 50 13% 92%;
+	--doodle: 36 79% 60%;
+	--destructive: 6 67% 62%;
+	--destructive-foreground: 60 3% 8%;
+	--border: 60 3% 18%;
+	--input: 51 3% 60%;
+	--ring: 50 13% 92%;
+	--wavy-muted: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 8' preserveAspectRatio='none'%3E%3Cpath d='M1.5 4.6C40 3 70 6.2 118 4.4S205 2.6 240 4.8 285 4.2 298.5 3.4' fill='none' stroke='%239c9b95' stroke-width='1.5' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+	--wavy-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 8' preserveAspectRatio='none'%3E%3Cpath d='M1.5 4.6C40 3 70 6.2 118 4.4S205 2.6 240 4.8 285 4.2 298.5 3.4' fill='none' stroke='%23eeede8' stroke-width='1.8' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
 }
 
 @theme inline {
@@ -67,18 +76,124 @@
 	--color-border: hsl(var(--border));
 	--color-input: hsl(var(--input));
 	--color-ring: hsl(var(--ring));
+	--color-text: hsl(var(--text));
+	--color-doodle: hsl(var(--doodle));
+	--font-hand: var(--font-inspiration), 'Gaegu', 'Patrick Hand', cursive;
+	--font-sans: var(--font-jost), 'Noto Sans SC', ui-sans-serif, system-ui, sans-serif;
 	--radius: var(--radius);
 }
 
-* {
-	border-color: hsl(var(--border));
+@layer base {
+	* {
+		border-color: hsl(var(--border));
+	}
 }
 
+html {
+	background-color: hsl(var(--background));
+}
+
+@layer base {
+/* quiet voice: light sans, wide tracking, grey */
 body {
 	background-color: hsl(var(--background));
-	color: hsl(var(--foreground));
-	font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+	color: hsl(var(--text));
+	font-family: var(--font-sans);
+	font-weight: 300;
+	font-size: 15px;
+	line-height: 1.8;
+	letter-spacing: 0.06em;
 	text-transform: lowercase;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* handwritten voice: short display text only */
+h1,
+h2,
+.font-hand {
+	font-family: var(--font-hand);
+	font-weight: 400;
+	letter-spacing: normal;
+	color: hsl(var(--foreground));
+	line-height: 1.25;
+}
+}
+
+::selection {
+	background: hsl(var(--doodle) / 0.35);
+}
+
+@layer components {
+/* a pill drawn by hand: uneven corner radii read as a wobbly outline */
+.doodle-pill {
+	border: 1.5px solid currentColor;
+	border-radius: 255px 18px 225px 18px / 18px 225px 18px 255px;
+}
+.doodle-box {
+	border: 1.5px solid hsl(var(--foreground));
+	border-radius: 3px 14px 5px 12px / 12px 4px 14px 5px;
+}
+
+/* a hand-drawn underline that draws itself in on hover (always on with .is-on) */
+.doodle-underline {
+	position: relative;
+}
+.doodle-underline::after {
+	content: '';
+	position: absolute;
+	left: -2px;
+	right: -2px;
+	bottom: -5px;
+	height: 7px;
+	background: currentColor;
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5.2C22 3.4 40 6 62 4.4S104 2.8 118 4.6' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5.2C22 3.4 40 6 62 4.4S104 2.8 118 4.6' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+	clip-path: inset(0 100% 0 0);
+	transition: clip-path 0.55s ease;
+	pointer-events: none;
+}
+.doodle-underline:hover::after,
+.doodle-underline:focus-visible::after,
+.doodle-underline.is-on::after {
+	clip-path: inset(0 0 0 0);
+}
+.doodle-underline.accent::after {
+	background: hsl(var(--doodle));
+}
+
+/* inputs are a single wobbly underline */
+.doodle-input {
+	border: 0;
+	background: var(--wavy-muted) left bottom / 100% 8px no-repeat;
+}
+.doodle-input:focus,
+.doodle-input:focus-visible {
+	background-image: var(--wavy-ink);
+	outline: none;
+}
+}
+
+/* slow, gentle bob for hero doodles */
+@keyframes doodle-bob {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-3px);
+	}
+}
+.doodle-bob {
+	animation: doodle-bob 4.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.doodle-bob {
+		animation: none;
+	}
+	.doodle-underline::after {
+		transition: none;
+	}
 }
 
 button {
@@ -104,4 +219,48 @@ input[type='number']::-webkit-inner-spin-button {
 input[type='number'] {
 	-moz-appearance: textfield;
 	appearance: textfield;
+}
+
+/* theme toggle: the new icon draws itself in, hover gives it a nudge */
+@keyframes doodle-draw {
+	from {
+		stroke-dashoffset: 1;
+	}
+	to {
+		stroke-dashoffset: 0;
+	}
+}
+.doodle-toggle .is-drawing path {
+	stroke-dasharray: 1;
+	stroke-dashoffset: 1;
+	animation: doodle-draw 0.45s ease-out forwards;
+	animation-delay: calc(var(--i, 0) * 45ms);
+}
+.doodle-sun,
+.doodle-moon,
+.doodle-twinkle {
+	transform-box: fill-box;
+	transform-origin: center;
+	transition: transform 0.6s ease;
+}
+.doodle-toggle:hover .doodle-sun {
+	transform: rotate(18deg);
+}
+.doodle-toggle:hover .doodle-moon {
+	transform: rotate(-10deg) translateY(-1px);
+}
+.doodle-toggle:hover .doodle-twinkle {
+	transform: scale(1.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.doodle-toggle .is-drawing path {
+		animation: none;
+		stroke-dashoffset: 0;
+	}
+	.doodle-sun,
+	.doodle-moon,
+	.doodle-twinkle {
+		transition: none;
+	}
 }

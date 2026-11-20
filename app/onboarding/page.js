@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { BoilText } from "@/components/doodles";
 
 export default function OnboardingPage() {
   const [username, setUsername] = useState("");
@@ -25,11 +26,11 @@ export default function OnboardingPage() {
   return (
     <div className="space-y-8">
       <div className="space-y-1">
-        <h1 className="text-2xl font-bold">welcome to bestRead</h1>
+        <h1 className="text-4xl">welcome to bestRead</h1>
         <p className="text-muted-foreground text-sm">choose a username to get started</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-8 max-w-sm">
         <div className="space-y-2">
           <Label htmlFor="username">username</Label>
           <Input
@@ -47,8 +48,8 @@ export default function OnboardingPage() {
             lowercase letters, numbers, and underscores only
           </p>
         </div>
-        <Button type="submit" disabled={isPending} className="w-full">
-          {isPending ? "setting up..." : "continue"}
+        <Button type="submit" disabled={isPending}>
+          {isPending ? <BoilText text="setting up..." /> : "continue →"}
         </Button>
       </form>
     </div>

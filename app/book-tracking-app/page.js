@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import {Button} from '@/components/ui/button';
+import {ThemeToggle} from '@/components/theme-toggle';
+import {EmptyShelfDoodle} from '@/components/doodles';
 
 export const metadata = {
 	title: 'Book Tracking App | Minimalist Reading Tracker',
@@ -9,39 +10,38 @@ export const metadata = {
 
 export default function BookTrackingAppPage() {
 	return (
-		<div className="flex flex-col min-h-screen">
+		<div className="flex flex-col min-h-[80vh] space-y-16">
 			<header className="flex justify-between items-center">
-				<Link href="/" className="text-2xl font-bold">
+				<Link href="/" className="font-hand text-3xl text-foreground hover:-rotate-1 transition-transform inline-block">
 					bestRead
 				</Link>
-				<Link href="/login">
-					<Button variant="ghost" size="md">
+				<nav className="flex items-center gap-5 text-[13px] tracking-[0.13em]">
+					<Link href="/login" className="doodle-underline text-foreground">
 						login
-					</Button>
-				</Link>
+					</Link>
+					<ThemeToggle />
+				</nav>
 			</header>
 
-			<main className="flex-1 space-y-12 py-12">
-				<section className="space-y-4">
-					<h1 className="text-4xl font-extrabold">book tracking app</h1>
-					<p className="text-xl text-muted-foreground leading-relaxed">
-						a minimal book tracking app for people who want to focus on reading, not managing complex features.
-					</p>
-				</section>
+			<section className="space-y-4">
+				<h1 className="text-5xl">book tracking app</h1>
+				<p className="text-muted-foreground leading-[1.9] max-w-md">
+					a minimal book tracking app for people who want to focus on reading, not managing complex features.
+				</p>
+			</section>
 
-				<section className="space-y-4">
-					<h1 className="text-2xl font-extrabold hover:bg-indigo-200">
-						This is a project WIP, check back and discover more
-					</h1>
-				</section>
+			<section className="flex flex-col items-start gap-2">
+				<EmptyShelfDoodle className="w-52 text-foreground" />
+				<p className="font-hand text-2xl text-foreground">still building this shelf.</p>
+				<p className="text-sm text-muted-foreground">this page is a work in progress, check back soon.</p>
+			</section>
 
-				<section className="space-y-4 bg-muted/50 p-8 text-center">
-					<h2 className="text-xl font-semibold">ready to start tracking your books?</h2>
-					<Link href="/login">
-						<Button size="lg">start tracking for free</Button>
-					</Link>
-				</section>
-			</main>
+			<section className="space-y-4 pb-8">
+				<h2 className="text-3xl">ready to start tracking your books?</h2>
+				<Link href="/login" className="doodle-underline is-on accent font-hand text-2xl text-foreground">
+					start tracking for free →
+				</Link>
+			</section>
 		</div>
 	);
 }

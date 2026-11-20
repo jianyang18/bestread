@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { useAction } from "next-safe-action/hooks";
 import { verifyOtpAction } from "@/actions/verify-otp.action";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { BoilText } from "@/components/doodles";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -54,18 +55,18 @@ export default function LoginPage() {
   return (
     <div className="space-y-8">
       <header className="flex justify-between items-center">
-        <Link href="/" className="text-2xl font-bold hover:opacity-80 transition-opacity">
+        <Link href="/" className="font-hand text-3xl text-foreground hover:-rotate-1 transition-transform inline-block">
           bestRead
         </Link>
         <ThemeToggle />
       </header>
       <div className="space-y-1">
-        <h1 className="text-xl font-bold">sign in</h1>
+        <h1 className="text-4xl">sign in</h1>
         <p className="text-muted-foreground text-sm">sign in to track your reading</p>
       </div>
 
       {!otpSent ? (
-        <form onSubmit={handleSendOtp} className="space-y-4">
+        <form onSubmit={handleSendOtp} className="space-y-8 max-w-sm">
           <div className="space-y-2">
             <Label htmlFor="email">email</Label>
             <Input
@@ -77,12 +78,12 @@ export default function LoginPage() {
               required
             />
           </div>
-          <Button type="submit" disabled={isSending} className="w-full">
-            {isSending ? "sending..." : "send login code"}
+          <Button type="submit" disabled={isSending}>
+            {isSending ? <BoilText text="sending..." /> : "send login code →"}
           </Button>
         </form>
       ) : (
-        <form onSubmit={handleVerify} className="space-y-4">
+        <form onSubmit={handleVerify} className="space-y-8 max-w-sm">
           <div className="space-y-2">
             <Label htmlFor="token">enter code sent to {email}</Label>
             <Input
@@ -95,13 +96,13 @@ export default function LoginPage() {
               autoFocus
             />
           </div>
-          <Button type="submit" disabled={isVerifying} className="w-full">
-            {isVerifying ? "verifying..." : "verify code"}
+          <Button type="submit" disabled={isVerifying}>
+            {isVerifying ? <BoilText text="verifying..." /> : "verify code →"}
           </Button>
           <button
             type="button"
             onClick={() => setOtpSent(false)}
-            className="text-sm text-muted-foreground hover:underline w-full text-center"
+            className="doodle-underline block w-fit text-sm text-muted-foreground hover:text-foreground"
           >
             use a different email
           </button>

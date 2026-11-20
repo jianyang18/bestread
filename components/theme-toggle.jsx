@@ -21,6 +21,10 @@ export function ThemeToggle() {
       localStorage.setItem("theme", next);
     } catch {}
     document.documentElement.classList.toggle("dark", next === "dark");
+    // keep the phone's status bar (installed app) the same colour as the page
+    document
+      .querySelectorAll('meta[name="theme-color"]')
+      .forEach((m) => m.setAttribute("content", next === "dark" ? "#151513" : "#ffffff"));
   }
 
   // Reserve space during SSR/before hydration to avoid layout shift

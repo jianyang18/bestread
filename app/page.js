@@ -2,14 +2,14 @@ import Link from 'next/link';
 import {getUser} from '@/lib/supabase/queries/cached-queries';
 import {redirect} from 'next/navigation';
 import {ThemeToggle} from '@/components/theme-toggle';
-import {HeroDoodle} from '@/components/doodles';
+import {EmptyShelfDoodle} from '@/components/doodles';
 
 export default async function HomePage() {
 	const user = await getUser();
 	if (user?.data?.username) redirect(`/${user.data.username}`);
 
 	return (
-		<div className="space-y-16">
+		<div className="flex flex-col min-h-[80vh] space-y-16">
 			<header className="flex justify-between items-center">
 				<span className="font-hand text-3xl">bestRead</span>
 				<nav className="flex items-center gap-5 text-[13px] tracking-[0.13em]">
@@ -23,41 +23,21 @@ export default async function HomePage() {
 				</nav>
 			</header>
 
-			<section className="grid gap-8 sm:grid-cols-[1.35fr_1fr] sm:items-end">
-				<div className="space-y-6">
-					<h1 className="text-[40px] sm:text-[44px] whitespace-nowrap">
-						minimalist
-						<br />
-						reading tracker
-					</h1>
-					<p className="text-muted-foreground leading-[1.9] max-w-xs">
-						track your reading progress without distractions. no reviews, no recommendations, no social features.
-						just your books.
-					</p>
-				</div>
-				<HeroDoodle className="w-full max-w-[360px] justify-self-end text-foreground" />
+			<section className="space-y-4">
+				<h1 className="text-5xl">book tracking app</h1>
+				<p className="text-muted-foreground leading-[1.9] max-w-md">
+					a minimal book tracking app for people who want to focus on reading, not managing complex features.
+				</p>
 			</section>
 
-			<section className="space-y-3">
-				<h2 className="text-3xl">what you get?</h2>
-				<ul className="space-y-1 text-sm leading-[1.9]">
-					<li>add books from google books search</li>
-					<li>track reading progress by page or percentage</li>
-					<li>mark books as reading, finished, or want to read</li>
-					<li>rate books you have finished</li>
-					<li>track your reading streak</li>
-					<li>a shareable public library page</li>
-				</ul>
-			</section>
+			<EmptyShelfDoodle className="w-52 text-foreground" />
 
-			<div className="flex flex-wrap items-center gap-x-8 gap-y-4 pb-8">
+			<section className="space-y-4 pb-8">
+				<h2 className="text-3xl">ready to start tracking your books?</h2>
 				<Link href="/login" className="doodle-underline is-on accent font-hand text-2xl text-foreground">
 					start tracking for free →
 				</Link>
-				<Link href="/book-tracking-app" className="doodle-underline font-hand text-xl text-muted-foreground hover:text-foreground">
-					learn more
-				</Link>
-			</div>
+			</section>
 		</div>
 	);
 }

@@ -5,7 +5,7 @@
 </style>
 
 <g transform="translate(256 256) scale(1.300) translate(-256 -300)" fill="none" class="ink" stroke-width="28" stroke-linecap="round" stroke-linejoin="round">
-<path d="M258 180 C284 180 302 200 301 226 C300 252 282 270 256 269 C230 268 212 250 213 224 C214 200 232 181 258 180 Z" class="paper"/>
+<path d="M256 269 C230 268 212 250 213 224 C214 200 232 181 258 180 C284 180 302 200 301 226 C300 252 282 270 256 269 Z" class="paper"/>
 
 <path d="M256 262 C222 236 158 228 104 244 C106 284 107 320 110 362 C164 344 222 348 256 372 C290 348 346 343 401 360 C404 322 406 282 408 242 C356 230 292 236 256 262 Z" class="paper" stroke="none"/>
 <path d="M256 262 C222 236 158 228 104 244"/>

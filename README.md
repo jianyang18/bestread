@@ -96,7 +96,7 @@ bestRead is a PWA, so it can live on your home screen and open full screen like 
 Open the live site (not localhost) in the phone's browser, then:
 
 - **iPhone (Safari):** tap the Share button, scroll down, tap **Add to Home Screen**, then **Add**.
-  On iOS 26 you can also use the **⋯** menu, then **Share**, then **Add to Home Screen**. (Chrome on iPhone works too: Share, then Add to Home Screen.)
+  If you do not see Share in the bottom bar, tap **⋯** first. (Chrome on iPhone works too: Share, then Add to Home Screen.)
 - **Android (Chrome):** tap the **⋮** menu, then **Add to home screen** (or **Install app**), then **Install**.
   Chrome may also show an install banner by itself.
 

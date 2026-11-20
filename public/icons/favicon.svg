@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<style>
+.ink{stroke:#000000}.paper{fill:#ffffff}
+@media (prefers-color-scheme: dark){.ink{stroke:#eeede8}.paper{fill:#151513}}
+</style>
+
+<g transform="translate(256 256) scale(4.000) translate(-157 -70)" fill="none" class="ink" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M92 92 C130 90 180 93 222 91"/>
+<path d="M150 86 C152 96 151 106 149 114"/><path d="M149 114 C146 116 142 116 141 114"/><path d="M160 86 C163 95 163 104 162 111"/><path d="M162 111 C160 114 156 114 154 112"/>
+<path d="M141 62 C149 59 163 59 169 63 C171 71 171 81 169 88 C160 91 148 91 141 88 C139 80 139 70 141 62 Z" class="paper"/>
+<path d="M155 36 C163 36 168 42 167 49 C166 56 160 60 154 59 C147 58 143 52 144 46 C145 40 149 36 155 36 Z" class="paper"/>
+
+<path d="M139 77 C146 74 151 74 155 77 C159 74 164 74 171 77 C171 80 171 83 171 86 C164 83 159 83 155 86 C151 83 146 83 139 86 C139 83 139 80 139 77 Z" class="paper"/>
+</g>
+<g transform="translate(256 256) scale(4.000) translate(-157 -70)" fill="none" stroke="#e8a33d" stroke-width="5.5200000000000005" stroke-linecap="round">
+<path d="M180 40 L187 35"/><path d="M182 50 L190 50"/>
+</g>
+</svg>

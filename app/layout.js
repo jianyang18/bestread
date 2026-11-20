@@ -3,6 +3,7 @@ import {Toaster} from 'sonner';
 import {Analytics} from '@vercel/analytics/next';
 import localFont from 'next/font/local';
 import {Jost} from 'next/font/google';
+import {PwaRegister} from '@/components/pwa-register';
 
 // handwritten voice: the Inspiration Hand font (latin only; other glyphs fall back)
 const inspirationHand = localFont({
@@ -19,11 +20,31 @@ export const metadata = {
 	description:
 		'Track your reading progress without distractions. A minimal book tracking app for people who want to focus on reading, not managing complex features.',
 	robots: {index: true, follow: true},
+	applicationName: 'bestRead',
+	// app/manifest.js is linked automatically; these cover browsers that read <link> tags
+	icons: {
+		icon: [
+			{url: '/icons/favicon.svg', type: 'image/svg+xml'},
+			{url: '/icons/favicon-32.png', sizes: '32x32', type: 'image/png'},
+		],
+		apple: [{url: '/icons/apple-touch-icon.png', sizes: '180x180'}],
+	},
+	// iPhone "Add to Home Screen": open full screen with the page colour behind the status bar
+	appleWebApp: {capable: true, title: 'bestRead', statusBarStyle: 'default'},
+	formatDetection: {telephone: false},
 };
 
-export const viewport = {width: 'device-width', initialScale: 1, maximumScale: 1};
+export const viewport = {
+	width: 'device-width',
+	initialScale: 1,
+	maximumScale: 1,
+	themeColor: [
+		{media: '(prefers-color-scheme: light)', color: '#ffffff'},
+		{media: '(prefers-color-scheme: dark)', color: '#151513'},
+	],
+};
 
-const themeScript = `(function(){try{var t=localStorage.getItem('theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}if(t==='dark'){document.documentElement.classList.add('dark');}}catch(e){}})();`;
+const themeScript = `(function(){try{var t=localStorage.getItem('theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}if(t==='dark'){document.documentElement.classList.add('dark');}document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('meta[name=theme-color]').forEach(function(m){m.setAttribute('content',t==='dark'?'#151513':'#ffffff');});});}catch(e){}})();`;
 
 export default function RootLayout({children}) {
 	return (
@@ -49,6 +70,7 @@ export default function RootLayout({children}) {
 					}}
 				/>
 				<Analytics />
+				<PwaRegister />
 			</body>
 		</html>
 	);

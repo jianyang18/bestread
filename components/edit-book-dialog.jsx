@@ -13,6 +13,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { BoilText } from "@/components/doodles";
+import { doodlePaths } from "@/components/doodles/paths";
 import { Input } from "@/components/ui/input";
 import { uploadBookCover } from "@/lib/upload-cover";
 import { toast } from "sonner";
@@ -94,7 +96,7 @@ export function EditBookDialog({ book, children }) {
       </DialogTrigger>
       <DialogContent className="max-w-sm">
         <DialogHeader>
-          <DialogTitle className="text-sm font-medium">{book.title}</DialogTitle>
+          <DialogTitle className="font-sans text-base font-normal tracking-[0.04em] pr-8">{book.title}</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-5">
@@ -110,7 +112,7 @@ export function EditBookDialog({ book, children }) {
                 className="object-cover flex-shrink-0"
               />
             ) : (
-              <div className="w-14 h-[84px] bg-secondary flex-shrink-0" />
+              <div className="doodle-box w-14 h-[84px] flex-shrink-0 border-muted-foreground/60" />
             )}
             <div className="space-y-1.5">
               <p className="text-sm">cover</p>
@@ -128,7 +130,7 @@ export function EditBookDialog({ book, children }) {
                   disabled={uploading}
                   className="text-xs underline text-muted-foreground hover:text-foreground disabled:opacity-50"
                 >
-                  {uploading ? "uploading..." : imageUrl ? "replace" : "upload"}
+                  {uploading ? <BoilText text="uploading..." /> : imageUrl ? "replace" : "upload"}
                 </button>
                 {imageUrl && !uploading && (
                   <button
@@ -155,10 +157,11 @@ export function EditBookDialog({ book, children }) {
                   <button
                     key={type}
                     onClick={() => { setProgressType(type); setProgress("0"); }}
-                    className={`px-4 py-1.5 text-sm border transition-colors ${
+                    aria-pressed={progressType === type}
+                    className={`px-4 py-1 font-hand text-lg transition-colors ${
                       progressType === type
-                        ? "bg-foreground text-background border-foreground"
-                        : "border-input bg-background hover:bg-accent"
+                        ? "doodle-pill text-foreground"
+                        : "border-[1.5px] border-transparent text-muted-foreground hover:text-foreground"
                     }`}
                   >
                     {type}
@@ -182,7 +185,7 @@ export function EditBookDialog({ book, children }) {
                     type="checkbox"
                     checked={isReading}
                     onChange={(e) => handleReadingChange(e.target.checked)}
-                    className="accent-primary"
+                    className="accent-[hsl(var(--doodle))]"
                   />
                   currently reading
                 </label>
@@ -191,7 +194,7 @@ export function EditBookDialog({ book, children }) {
                     type="checkbox"
                     checked={isFinished}
                     onChange={(e) => handleFinishedChange(e.target.checked)}
-                    className="accent-primary"
+                    className="accent-[hsl(var(--doodle))]"
                   />
                   mark as finished
                 </label>
@@ -208,11 +211,15 @@ export function EditBookDialog({ book, children }) {
                   <button
                     key={star}
                     onClick={() => setRating(star === rating ? 0 : star)}
-                    className={`text-lg transition-colors ${
-                      star <= rating ? "text-foreground" : "text-muted-foreground"
+                    aria-label={`${star} star${star > 1 ? "s" : ""}`}
+                    aria-pressed={star <= rating}
+                    className={`transition-[color,transform] duration-300 hover:-rotate-12 ${
+                      star <= rating ? "text-doodle" : "text-muted-foreground/60"
                     }`}
                   >
-                    ★
+                    <svg viewBox="0 0 32 32" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                      {doodlePaths.star.map((d, i) => <path key={i} d={d} />)}
+                    </svg>
                   </button>
                 ))}
               </div>
@@ -220,7 +227,7 @@ export function EditBookDialog({ book, children }) {
           )}
 
           {/* Save */}
-          <Button onClick={handleSave} disabled={isEditing || uploading} className="w-full">
+          <Button onClick={handleSave} disabled={isEditing || uploading}>
             save
           </Button>
 
@@ -228,7 +235,7 @@ export function EditBookDialog({ book, children }) {
           <button
             onClick={handleDelete}
             disabled={isDeleting}
-            className="w-full text-center text-sm text-destructive hover:text-destructive/80 transition-colors"
+            className="doodle-underline block w-fit text-sm text-destructive transition-colors"
           >
             remove from library
           </button>

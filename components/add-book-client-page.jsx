@@ -11,6 +11,7 @@ import {Button} from '@/components/ui/button';
 import {ThemeToggle} from '@/components/theme-toggle';
 import {uploadBookCover} from '@/lib/upload-cover';
 import {toast} from 'sonner';
+import {BoilText} from '@/components/doodles';
 
 export function AddBookClientPage({username}) {
 	const [query, setQuery] = useState('');
@@ -121,13 +122,13 @@ export function AddBookClientPage({username}) {
 		<div className="space-y-8">
 			{/* Header */}
 			<header className="flex justify-between items-center">
-				<Link href="/" className="text-xl font-bold hover:opacity-80 transition-opacity">
+				<Link href="/" className="font-hand text-3xl text-foreground hover:-rotate-1 transition-transform inline-block">
 					bestRead
 				</Link>
 				<div className="flex items-center gap-4">
 					<ThemeToggle />
 					<form action={logOutAction}>
-						<button type="submit" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+						<button type="submit" className="doodle-underline text-[13px] tracking-[0.13em] text-muted-foreground hover:text-foreground transition-colors">
 							log out
 						</button>
 					</form>
@@ -135,7 +136,7 @@ export function AddBookClientPage({username}) {
 			</header>
 
 			{/* Back */}
-			<Link href={`/${username}`} className="inline-flex items-center gap-1 text-sm text-primary hover:underline">
+			<Link href={`/${username}`} className="doodle-underline inline-flex items-center gap-1 font-hand text-lg text-foreground">
 				← go back
 			</Link>
 
@@ -149,15 +150,15 @@ export function AddBookClientPage({username}) {
 						autoFocus
 					/>
 
-					{searching && <p className="text-sm text-muted-foreground">searching...</p>}
+					{searching && <BoilText text="searching..." className="font-hand text-lg text-muted-foreground" />}
 
 					{!searching && results.length > 0 && (
-						<div className="divide-y divide-border">
+						<div>
 							{results.map((book) => (
 								<button
 									key={book.id}
 									onClick={() => handleSelect(book)}
-									className="w-full text-left flex gap-4 items-start py-3 hover:bg-accent transition-colors px-1">
+									className="w-full text-left flex gap-4 items-start py-3 px-1 transition-transform duration-300 hover:translate-x-1">
 									{book.volumeInfo.imageLinks?.smallThumbnail ? (
 										<Image
 											src={book.volumeInfo.imageLinks.smallThumbnail.replace('http:', 'https:')}
@@ -167,12 +168,12 @@ export function AddBookClientPage({username}) {
 											className="object-cover flex-shrink-0"
 										/>
 									) : (
-										<div className="w-10 h-[60px] bg-secondary flex-shrink-0" />
+										<div className="w-10 h-[60px] flex-shrink-0 doodle-box border-muted-foreground/60" />
 									)}
 									<div className="min-w-0">
-										<p className="font-bold text-sm leading-tight">{book.volumeInfo.title}</p>
+										<p className="text-[15px] text-foreground leading-snug">{book.volumeInfo.title}</p>
 										{book.volumeInfo.authors?.length > 0 && (
-											<p className="text-sm italic text-muted-foreground mt-0.5">
+											<p className="text-xs text-muted-foreground mt-0.5">
 												{book.volumeInfo.authors.join(', ')}
 											</p>
 										)}
@@ -183,12 +184,12 @@ export function AddBookClientPage({username}) {
 					)}
 
 					{!searching && query.trim() && results.length === 0 && (
-						<p className="text-sm text-muted-foreground">no results</p>
+						<p className="font-hand text-lg text-muted-foreground">no results</p>
 					)}
 
 					{/* Manual add */}
-					<div className="border-t pt-4 space-y-3">
-						<p className="text-xs text-muted-foreground">or add manually</p>
+					<div className="pt-6 space-y-3">
+						<p className="font-hand text-lg text-muted-foreground">or add it by hand</p>
 						<form onSubmit={handleManualAdd} className="space-y-3">
 							<Input
 								name="title"
@@ -207,7 +208,7 @@ export function AddBookClientPage({username}) {
 										className="object-cover flex-shrink-0"
 									/>
 								) : (
-									<div className="w-12 h-[72px] bg-secondary flex-shrink-0" />
+									<div className="w-12 h-[72px] flex-shrink-0 doodle-box border-muted-foreground/60" />
 								)}
 								<div className="space-y-1">
 									<input
@@ -223,7 +224,7 @@ export function AddBookClientPage({username}) {
 											onClick={() => manualFileRef.current?.click()}
 											disabled={uploading}
 											className="text-xs underline text-muted-foreground hover:text-foreground disabled:opacity-50">
-											{uploading ? 'uploading...' : manualImageUrl ? 'replace cover' : 'upload cover (optional)'}
+											{uploading ? <BoilText text="uploading..." /> : manualImageUrl ? 'replace cover' : 'upload cover (optional)'}
 										</button>
 										{manualImageUrl && !uploading && (
 											<button
@@ -253,11 +254,11 @@ export function AddBookClientPage({username}) {
 								className="object-cover flex-shrink-0"
 							/>
 						) : (
-							<div className="w-16 h-[96px] bg-secondary flex-shrink-0" />
+							<div className="w-16 h-[96px] flex-shrink-0 doodle-box border-muted-foreground/60" />
 						)}
 						<div className="min-w-0 space-y-1">
-							<p className="font-bold">{selected.title}</p>
-							<p className="text-sm italic text-muted-foreground">{selected.authors.join(', ')}</p>
+							<p className="text-lg text-foreground leading-snug">{selected.title}</p>
+							<p className="text-sm text-muted-foreground">{selected.authors.join(', ')}</p>
 							{selected.pageCount > 0 && <p className="text-xs text-muted-foreground">{selected.pageCount} pages</p>}
 							<input
 								ref={selectedFileRef}
@@ -271,25 +272,24 @@ export function AddBookClientPage({username}) {
 								onClick={() => selectedFileRef.current?.click()}
 								disabled={uploading}
 								className="text-xs underline text-muted-foreground hover:text-foreground disabled:opacity-50">
-								{uploading ? 'uploading...' : selected.imageUrl ? 'replace cover' : 'upload cover'}
+								{uploading ? <BoilText text="uploading..." /> : selected.imageUrl ? 'replace cover' : 'upload cover'}
 							</button>
 						</div>
 					</div>
 
-					<div className="space-y-2">
-						<Button onClick={() => handleAdd(true)} disabled={isPending || uploading} className="w-full">
+					<div className="flex flex-wrap gap-3">
+						<Button onClick={() => handleAdd(true)} disabled={isPending || uploading}>
 							currently reading
 						</Button>
 						<Button
 							onClick={() => handleAdd(false)}
 							disabled={isPending || uploading}
-							variant="outline"
-							className="w-full">
+							variant="outline">
 							want to read
 						</Button>
 					</div>
 
-					<button onClick={() => setSelected(null)} className="text-xs text-muted-foreground hover:underline">
+					<button onClick={() => setSelected(null)} className="doodle-underline text-xs text-muted-foreground hover:text-foreground">
 						search again
 					</button>
 				</div>

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { logOutAction } from "@/actions/log-out.action";
 import { EditBookDialog } from "@/components/edit-book-dialog";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { EmptyShelfDoodle, FlameDoodle } from "@/components/doodles";
 
 export function LibraryView({ books, isOwner, username, streak }) {
   const [activeTab, setActiveTab] = useState("total");
@@ -37,11 +38,11 @@ export function LibraryView({ books, isOwner, username, streak }) {
     <div className="space-y-8">
       {/* Header */}
       <header className="flex justify-between items-center">
-        <h1 className="text-xl font-bold">{username}</h1>
+        <h1 className="text-3xl">{username}</h1>
         <div className="flex items-center gap-4">
           <Link
             href="/"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            className="doodle-underline font-hand text-lg text-muted-foreground hover:text-foreground transition-colors"
           >
             bestRead
           </Link>
@@ -50,7 +51,7 @@ export function LibraryView({ books, isOwner, username, streak }) {
             <form action={logOutAction}>
               <button
                 type="submit"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="doodle-underline text-[13px] tracking-[0.13em] text-muted-foreground hover:text-foreground transition-colors"
               >
                 log out
               </button>
@@ -64,34 +65,36 @@ export function LibraryView({ books, isOwner, username, streak }) {
         <div className="flex justify-end">
           <Link
             href="/add-book"
-            className="text-sm text-primary hover:underline"
+            className="doodle-underline accent font-hand text-xl text-foreground"
           >
-            add book
+            + add a book
           </Link>
         </div>
       )}
 
       {/* Tabs */}
-      <div className="flex flex-wrap gap-x-6 gap-y-2 border-b border-border">
+      <div className="flex flex-wrap gap-x-7 gap-y-3">
         {tabs.map(({ key, label, count }) => (
           <button
             key={key}
             onClick={() => setActiveTab(key)}
-            className={`pb-2 text-sm whitespace-nowrap transition-colors ${
+            aria-pressed={activeTab === key}
+            className={`doodle-underline whitespace-nowrap text-sm tracking-[0.1em] transition-colors ${
               activeTab === key
-                ? "border-b-2 border-foreground font-medium -mb-px"
+                ? "is-on text-foreground"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            <span className="font-bold">{count}</span> {label}
+            <span className="font-hand text-xl mr-1">{count}</span> {label}
           </button>
         ))}
       </div>
 
       {/* Streak */}
       {streak?.current_streak > 0 && (
-        <p className="text-xs text-muted-foreground">
-          🔥 {streak.current_streak} day streak
+        <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
+          <FlameDoodle className="w-4 h-4 -mt-0.5" />
+          {streak.current_streak} day streak
           {streak.longest_streak > streak.current_streak &&
             ` · best: ${streak.longest_streak}`}
         </p>
@@ -99,7 +102,10 @@ export function LibraryView({ books, isOwner, username, streak }) {
 
       {/* Book list */}
       {displayBooks.length === 0 ? (
-        <p className="text-muted-foreground text-sm">{emptyMessage}</p>
+        <div className="flex flex-col items-center gap-2 py-10 text-center">
+          <EmptyShelfDoodle className="w-56 text-foreground" />
+          <p className="font-hand text-xl text-muted-foreground">{emptyMessage}</p>
+        </div>
       ) : (
         <div className="space-y-1">
           {displayBooks.map((book) => (
@@ -137,18 +143,18 @@ function BookRow({ book, isOwner }) {
             className="object-cover flex-shrink-0 self-start"
           />
         ) : (
-          <div className="w-10 h-[60px] bg-secondary flex-shrink-0" />
+          <div className="doodle-box w-10 h-[60px] flex-shrink-0 border-muted-foreground/60" />
         )}
         <div className="min-w-0 space-y-0.5">
-          <p className="font-bold text-sm leading-tight">{book.title}</p>
+          <p className="font-normal text-[15px] text-foreground leading-snug">{book.title}</p>
           {book.authors?.length > 0 && (
-            <p className="text-xs italic text-muted-foreground">
+            <p className="text-xs text-muted-foreground">
               {book.authors.join(", ")}
             </p>
           )}
         </div>
       </div>
-      <span className="text-xs text-muted-foreground shrink-0 self-center">
+      <span className="font-hand text-lg text-muted-foreground shrink-0 self-center">
         {rightLabel}
       </span>
     </>
@@ -166,7 +172,7 @@ function BookRow({ book, isOwner }) {
     <EditBookDialog book={book}>
       <button
         type="button"
-        className="flex justify-between items-start gap-4 w-full text-left py-2 px-2 -mx-2 rounded-sm hover:bg-accent transition-colors"
+        className="group flex justify-between items-start gap-4 w-full text-left py-2.5 px-2 -mx-2 transition-transform duration-300 hover:translate-x-1"
       >
         {inner}
       </button>

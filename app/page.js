@@ -1,50 +1,61 @@
 import Link from 'next/link';
-import {Button} from '@/components/ui/button';
 import {getUser} from '@/lib/supabase/queries/cached-queries';
 import {redirect} from 'next/navigation';
 import {ThemeToggle} from '@/components/theme-toggle';
+import {HeroDoodle} from '@/components/doodles';
 
 export default async function HomePage() {
 	const user = await getUser();
 	if (user?.data?.username) redirect(`/${user.data.username}`);
 
 	return (
-		<div className="space-y-12">
+		<div className="space-y-16">
 			<header className="flex justify-between items-center">
-				<span className="text-2xl font-bold">bestRead</span>
-				<div className="flex items-center gap-4">
-					<ThemeToggle />
-					<Link href="/login">
-						<Button variant="ghost" size="lg">
-							login
-						</Button>
+				<span className="font-hand text-3xl">bestRead</span>
+				<nav className="flex items-center gap-5 text-[13px] tracking-[0.13em]">
+					<Link href="/book-tracking-app" className="doodle-underline text-muted-foreground hover:text-foreground">
+						about
 					</Link>
-				</div>
+					<Link href="/login" className="doodle-underline text-foreground">
+						login
+					</Link>
+					<ThemeToggle />
+				</nav>
 			</header>
-			<section className="space-y-4">
-				<h1 className="text-6xl font-bold">minimalist reading tracker</h1>
-				<p className="text-muted-foreground text-lg leading-relaxed">
-					track your reading progress without distractions. no reviews, no recommendations, no social features. just
-					your books.
-				</p>
+
+			<section className="grid gap-8 sm:grid-cols-[1.35fr_1fr] sm:items-end">
+				<div className="space-y-6">
+					<h1 className="text-[40px] sm:text-[44px] whitespace-nowrap">
+						minimalist
+						<br />
+						reading tracker
+					</h1>
+					<p className="text-muted-foreground leading-[1.9] max-w-xs">
+						track your reading progress without distractions. no reviews, no recommendations, no social features.
+						just your books.
+					</p>
+				</div>
+				<HeroDoodle className="w-full max-w-[360px] justify-self-end text-foreground" />
 			</section>
-			<section className="space-y-2">
-				<h2 className="font-semibold">what you get</h2>
-				<ul className="space-y-1 text-muted-foreground text-sm">
-					<li>— add books from google books search</li>
-					<li>— track reading progress by page or percentage</li>
-					<li>— mark books as reading, finished, or want to read</li>
-					<li>— rate books you have finished</li>
-					<li>— track your reading streak</li>
-					<li>— shareable public library page</li>
+
+			<section className="space-y-3">
+				<h2 className="text-3xl">what you get?</h2>
+				<ul className="space-y-1 text-sm leading-[1.9]">
+					<li>add books from google books search</li>
+					<li>track reading progress by page or percentage</li>
+					<li>mark books as reading, finished, or want to read</li>
+					<li>rate books you have finished</li>
+					<li>track your reading streak</li>
+					<li>a shareable public library page</li>
 				</ul>
 			</section>
-			<div className="flex gap-3">
-				<Link href="/login">
-					<Button>start tracking for free</Button>
+
+			<div className="flex flex-wrap items-center gap-x-8 gap-y-4 pb-8">
+				<Link href="/login" className="doodle-underline is-on accent font-hand text-2xl text-foreground">
+					start tracking for free →
 				</Link>
-				<Link href="/book-tracking-app">
-					<Button variant="outline">learn more</Button>
+				<Link href="/book-tracking-app" className="doodle-underline font-hand text-xl text-muted-foreground hover:text-foreground">
+					learn more
 				</Link>
 			</div>
 		</div>

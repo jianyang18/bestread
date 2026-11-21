@@ -18,7 +18,7 @@ export const addBookSchema = z.object({
   title: z.string(),
   isReading: z.boolean().optional(),
   pageCount: z.number().optional(),
-  authors: z.array(z.string()).optional(),
+  authors: z.array(z.string().trim().min(1).max(200)).max(20).optional(),
   imageUrl: z.string().optional(),
 });
 
@@ -29,6 +29,7 @@ export const editBookSchema = z.object({
   progress: z.number().optional(),
   progressType: z.enum(["page", "percentage"]).optional(),
   rating: z.number().min(1).max(5).optional(),
+  authors: z.array(z.string().trim().min(1).max(200)).max(20).optional(),
   imageUrl: z.string().url().nullable().optional(),
 });
 

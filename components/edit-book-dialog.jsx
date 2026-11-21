@@ -19,6 +19,7 @@ import { doodlePaths } from "@/components/doodles/paths";
 import { Input } from "@/components/ui/input";
 import { uploadBookCover } from "@/lib/upload-cover";
 import { toast } from "sonner";
+import { formatAuthors, parseAuthors } from "@/lib/authors";
 
 export function EditBookDialog({ book, children }) {
   const [open, setOpen] = useState(false);
@@ -29,6 +30,7 @@ export function EditBookDialog({ book, children }) {
   const [isFinished, setIsFinished] = useState(book.is_finished ?? false);
   const [rating, setRating] = useState(book.rating ?? 0);
   const [imageUrl, setImageUrl] = useState(book.image_url ?? null);
+  const [authorText, setAuthorText] = useState(formatAuthors(book.authors));
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef(null);
   const totalPages = Number(book.page_count) || 0;
@@ -53,6 +55,8 @@ export function EditBookDialog({ book, children }) {
     };
     if (rating > 0) payload.rating = rating;
     if (imageUrl !== (book.image_url ?? null)) payload.imageUrl = imageUrl;
+    const authors = parseAuthors(authorText);
+    if (formatAuthors(authors) !== formatAuthors(book.authors)) payload.authors = authors;
     editBook(payload);
   }
 
@@ -145,6 +149,24 @@ export function EditBookDialog({ book, children }) {
               </div>
               <p className="text-[10px] text-muted-foreground">jpg, png, webp · max 2 mb</p>
             </div>
+          </div>
+
+          {/* Author */}
+          <div className="space-y-1">
+            <label htmlFor={`author-${book.id}`} className="text-sm">author</label>
+            <Input
+              id={`author-${book.id}`}
+              placeholder="who wrote it? (optional)"
+              enterKeyHint="done"
+              autoComplete="off"
+              autoCapitalize="words"
+              value={authorText}
+              onChange={(e) => setAuthorText(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.nativeEvent.isComposing) e.currentTarget.blur();
+              }}
+            />
+            <p className="text-[10px] text-muted-foreground">separate more than one with commas</p>
           </div>
 
           {/* Progress tracking — only for non-finished books */}

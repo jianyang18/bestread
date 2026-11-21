@@ -82,7 +82,7 @@ export function AddBookClientPage({username}) {
 
 	function handleManualAdd(e) {
 		e.preventDefault();
-		if (!manualTitle.trim()) return;
+		if (!manualTitle.trim() || isPending || uploading) return;
 		addBook({
 			title: manualTitle.trim(),
 			authors: [],
@@ -191,12 +191,23 @@ export function AddBookClientPage({username}) {
 					<div className="pt-6 space-y-3">
 						<p className="font-hand text-lg text-muted-foreground">or add it by hand</p>
 						<form onSubmit={handleManualAdd} className="space-y-3">
-							<Input
-								name="title"
-								placeholder="book title (press enter to add)"
-								value={manualTitle}
-								onChange={(e) => setManualTitle(e.target.value)}
-							/>
+							<div className="flex items-end gap-3">
+								<Input
+									name="title"
+									placeholder="book title"
+									enterKeyHint="done"
+									autoComplete="off"
+									value={manualTitle}
+									onChange={(e) => setManualTitle(e.target.value)}
+								/>
+								<Button
+									type="submit"
+									size="sm"
+									className="flex-shrink-0"
+									disabled={!manualTitle.trim() || isPending || uploading}>
+									{isPending ? <BoilText text="adding..." /> : 'add'}
+								</Button>
+							</div>
 							<div className="flex gap-3 items-start">
 								{manualImageUrl ? (
 									<Image

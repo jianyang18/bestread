@@ -13,7 +13,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { BoilText } from "@/components/doodles";
+import { BoilText, BookCoverPlaceholder } from "@/components/doodles";
 import { doodlePaths } from "@/components/doodles/paths";
 import { Input } from "@/components/ui/input";
 import { uploadBookCover } from "@/lib/upload-cover";
@@ -29,6 +29,7 @@ export function EditBookDialog({ book, children }) {
   const [imageUrl, setImageUrl] = useState(book.image_url ?? null);
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef(null);
+  const totalPages = Number(book.page_count) || 0;
 
   const { execute: editBook, isPending: isEditing } = useAction(editBookAction, {
     onSuccess: () => { toast.success("updated"); setOpen(false); },
@@ -112,7 +113,7 @@ export function EditBookDialog({ book, children }) {
                 className="object-cover flex-shrink-0"
               />
             ) : (
-              <div className="doodle-box w-14 h-[84px] flex-shrink-0 border-muted-foreground/60" />
+              <BookCoverPlaceholder className="w-14 h-[84px]" />
             )}
             <div className="space-y-1.5">
               <p className="text-sm">cover</p>
@@ -170,13 +171,28 @@ export function EditBookDialog({ book, children }) {
               </div>
 
               {/* Progress input */}
-              <Input
-                type="number"
-                min={0}
-                max={progressType === "page" ? (book.page_count || undefined) : 100}
-                value={progress}
-                onChange={(e) => setProgress(e.target.value)}
-              />
+              <div className="relative">
+                <Input
+                  type="number"
+                  min={0}
+                  max={progressType === "page" ? (totalPages || undefined) : 100}
+                  value={progress}
+                  onChange={(e) => setProgress(e.target.value)}
+                  aria-label={progressType === "page" ? "current page" : "percent read"}
+                  aria-describedby={`progress-suffix-${book.id}`}
+                  className="pr-28"
+                />
+                <span
+                  id={`progress-suffix-${book.id}`}
+                  className="pointer-events-none absolute right-0.5 top-0 flex h-10 items-center pt-1 pb-2 text-sm text-muted-foreground"
+                >
+                  {progressType === "page"
+                    ? totalPages > 0
+                      ? `/ ${totalPages.toLocaleString()} pages`
+                      : "pages"
+                    : "%"}
+                </span>
+              </div>
 
               {/* Checkboxes */}
               <div className="space-y-2">

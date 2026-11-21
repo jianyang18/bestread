@@ -6,7 +6,7 @@ import Image from "next/image";
 import { logOutAction } from "@/actions/log-out.action";
 import { EditBookDialog } from "@/components/edit-book-dialog";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { EmptyShelfDoodle, FlameDoodle } from "@/components/doodles";
+import { BookCoverPlaceholder, EmptyShelfDoodle, FlameDoodle } from "@/components/doodles";
 
 export function LibraryView({ books, isOwner, username, streak }) {
   const [activeTab, setActiveTab] = useState("total");
@@ -143,7 +143,7 @@ function BookRow({ book, isOwner }) {
             className="object-cover flex-shrink-0 self-start"
           />
         ) : (
-          <div className="doodle-box w-10 h-[60px] flex-shrink-0 border-muted-foreground/60" />
+          <BookCoverPlaceholder className="w-10 h-[60px]" />
         )}
         <div className="min-w-0 space-y-0.5">
           <p className="font-normal text-[15px] text-foreground leading-snug">{book.title}</p>

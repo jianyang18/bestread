@@ -88,9 +88,12 @@ export default function LoginPage() {
 						<Input
 							id="token"
 							type="text"
-							placeholder="6-digit code"
+							inputMode="numeric"
+							autoComplete="one-time-code"
+							pattern="[0-9]*"
+							placeholder="8-digit code"
 							value={token}
-							onChange={(e) => setToken(e.target.value)}
+							onChange={(e) => setToken(e.target.value.replace(/\D/g, ''))}
 							required
 							autoFocus
 						/>

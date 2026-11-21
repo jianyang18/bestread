@@ -13,6 +13,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { BoilText, BookCoverPlaceholder } from "@/components/doodles";
 import { doodlePaths } from "@/components/doodles/paths";
 import { Input } from "@/components/ui/input";
@@ -21,6 +22,7 @@ import { toast } from "sonner";
 
 export function EditBookDialog({ book, children }) {
   const [open, setOpen] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
   const [progressType, setProgressType] = useState(book.progress_type ?? "page");
   const [progress, setProgress] = useState(String(book.progress ?? 0));
   const [isReading, setIsReading] = useState(book.is_reading && !book.is_finished);
@@ -37,7 +39,7 @@ export function EditBookDialog({ book, children }) {
   });
 
   const { execute: deleteBook, isPending: isDeleting } = useAction(deleteBookAction, {
-    onSuccess: () => { toast.success("book removed"); setOpen(false); },
+    onSuccess: () => { toast.success("book removed"); setConfirmOpen(false); setOpen(false); },
     onError: ({ error }) => toast.error(error.serverError || "failed to delete"),
   });
 
@@ -55,9 +57,7 @@ export function EditBookDialog({ book, children }) {
   }
 
   function handleDelete() {
-    if (confirm(`remove "${book.title}"?`)) {
-      deleteBook({ bookId: book.id });
-    }
+    deleteBook({ bookId: book.id });
   }
 
   function handleFinishedChange(checked) {
@@ -249,12 +249,25 @@ export function EditBookDialog({ book, children }) {
 
           {/* Remove */}
           <button
-            onClick={handleDelete}
+            onClick={() => setConfirmOpen(true)}
             disabled={isDeleting}
             className="doodle-underline block w-fit text-sm text-destructive transition-colors"
           >
             remove from library
           </button>
+          <ConfirmDialog
+            open={confirmOpen}
+            onOpenChange={setConfirmOpen}
+            title="remove this book?"
+            description={<>
+              <span className="font-sans normal-case text-foreground">{book.title}</span> will leave your library, along with its progress and rating.
+            </>}
+            confirmLabel={isDeleting ? <BoilText text="removing..." /> : "remove"}
+            cancelLabel="keep it"
+            destructive
+            pending={isDeleting}
+            onConfirm={handleDelete}
+          />
         </div>
       </DialogContent>
     </Dialog>

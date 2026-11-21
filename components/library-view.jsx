@@ -40,12 +40,6 @@ export function LibraryView({ books, isOwner, username, streak }) {
       <header className="flex justify-between items-center">
         <h1 className="text-3xl">{username}</h1>
         <div className="flex items-center gap-4">
-          <Link
-            href="/"
-            className="doodle-underline font-hand text-lg text-muted-foreground hover:text-foreground transition-colors"
-          >
-            bestRead
-          </Link>
           <ThemeToggle />
           {isOwner && (
             <form action={logOutAction}>

@@ -26,6 +26,9 @@ export function AddBookClientPage({username}) {
 	const selectedFileRef = useRef(null);
 	const manualFileRef = useRef(null);
 	const manualAuthorRef = useRef(null);
+	// The query the current results belong to, so coming back from a
+	// selected book shows the same list without searching again.
+	const resultsQueryRef = useRef('');
 
 	const {execute: addBook, isPending} = useAction(addBookAction, {
 		onError: ({error}) => toast.error(error.serverError || 'failed to add book'),
@@ -36,10 +39,12 @@ export function AddBookClientPage({username}) {
 		if (selected) return;
 		const trimmed = query.trim();
 		if (!trimmed) {
+			resultsQueryRef.current = '';
 			setResults([]);
 			setSearching(false);
 			return;
 		}
+		if (trimmed === resultsQueryRef.current) return;
 		setSearching(true);
 		const controller = new AbortController();
 		const timer = setTimeout(async () => {
@@ -49,6 +54,7 @@ export function AddBookClientPage({username}) {
 					{signal: controller.signal},
 				);
 				const data = await res.json();
+				resultsQueryRef.current = trimmed;
 				setResults(data.items || []);
 			} catch (err) {
 				if (err.name !== 'AbortError') toast.error('search failed');
@@ -146,10 +152,19 @@ export function AddBookClientPage({username}) {
 				</div>
 			</header>
 
-			{/* Back */}
-			<Link href={`/${username}`} className="doodle-underline inline-flex items-center gap-1 font-hand text-lg text-foreground">
-				← go back
-			</Link>
+			{/* Back: from a picked book, return to the search; otherwise leave the page */}
+			{selected ? (
+				<button
+					type="button"
+					onClick={() => setSelected(null)}
+					className="doodle-underline inline-flex items-center gap-1 font-hand text-lg text-foreground">
+					← go back
+				</button>
+			) : (
+				<Link href={`/${username}`} className="doodle-underline inline-flex items-center gap-1 font-hand text-lg text-foreground">
+					← go back
+				</Link>
+			)}
 
 			{!selected ? (
 				<div className="space-y-6">
@@ -323,10 +338,6 @@ export function AddBookClientPage({username}) {
 							want to read
 						</Button>
 					</div>
-
-					<button onClick={() => setSelected(null)} className="doodle-underline text-xs text-muted-foreground hover:text-foreground">
-						search again
-					</button>
 				</div>
 			)}
 		</div>

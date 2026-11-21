@@ -5,7 +5,8 @@ export const otpSignInSchema = z.object({
 });
 
 export const verifyOtpSchema = z.object({
-  token: z.string(),
+  // Length is set by Supabase (Auth > Email OTP length), so only require digits here.
+  token: z.string().trim().regex(/^\d+$/, "Code must be digits only"),
   email: z.string(),
 });
 

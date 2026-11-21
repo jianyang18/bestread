@@ -29,6 +29,7 @@ export function EditBookDialog({ book, children }) {
   const [imageUrl, setImageUrl] = useState(book.image_url ?? null);
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef(null);
+  const totalPages = Number(book.page_count) || 0;
 
   const { execute: editBook, isPending: isEditing } = useAction(editBookAction, {
     onSuccess: () => { toast.success("updated"); setOpen(false); },
@@ -170,13 +171,28 @@ export function EditBookDialog({ book, children }) {
               </div>
 
               {/* Progress input */}
-              <Input
-                type="number"
-                min={0}
-                max={progressType === "page" ? (book.page_count || undefined) : 100}
-                value={progress}
-                onChange={(e) => setProgress(e.target.value)}
-              />
+              <div className="relative">
+                <Input
+                  type="number"
+                  min={0}
+                  max={progressType === "page" ? (totalPages || undefined) : 100}
+                  value={progress}
+                  onChange={(e) => setProgress(e.target.value)}
+                  aria-label={progressType === "page" ? "current page" : "percent read"}
+                  aria-describedby={`progress-suffix-${book.id}`}
+                  className="pr-28"
+                />
+                <span
+                  id={`progress-suffix-${book.id}`}
+                  className="pointer-events-none absolute right-0.5 top-0 flex h-10 items-center pt-1 pb-2 text-sm text-muted-foreground"
+                >
+                  {progressType === "page"
+                    ? totalPages > 0
+                      ? `/ ${totalPages.toLocaleString()} pages`
+                      : "pages"
+                    : "%"}
+                </span>
+              </div>
 
               {/* Checkboxes */}
               <div className="space-y-2">

@@ -12,6 +12,7 @@ import {ThemeToggle} from '@/components/theme-toggle';
 import {uploadBookCover} from '@/lib/upload-cover';
 import {toast} from 'sonner';
 import {BoilText, BookCoverPlaceholder} from '@/components/doodles';
+import {parseAuthors} from '@/lib/authors';
 
 export function AddBookClientPage({username}) {
 	const [query, setQuery] = useState('');
@@ -19,10 +20,12 @@ export function AddBookClientPage({username}) {
 	const [searching, setSearching] = useState(false);
 	const [selected, setSelected] = useState(null);
 	const [manualTitle, setManualTitle] = useState('');
+	const [manualAuthor, setManualAuthor] = useState('');
 	const [manualImageUrl, setManualImageUrl] = useState(null);
 	const [uploading, setUploading] = useState(false);
 	const selectedFileRef = useRef(null);
 	const manualFileRef = useRef(null);
+	const manualAuthorRef = useRef(null);
 
 	const {execute: addBook, isPending} = useAction(addBookAction, {
 		onError: ({error}) => toast.error(error.serverError || 'failed to add book'),
@@ -85,11 +88,19 @@ export function AddBookClientPage({username}) {
 		if (!manualTitle.trim() || isPending || uploading) return;
 		addBook({
 			title: manualTitle.trim(),
-			authors: [],
+			authors: parseAuthors(manualAuthor),
 			pageCount: 0,
 			imageUrl: manualImageUrl || undefined,
 			isReading: false,
 		});
+	}
+
+	// Enter on the title moves on to the author instead of submitting,
+	// so the author can still be filled in (phone keyboards show "next").
+	function handleTitleKeyDown(e) {
+		if (e.key !== 'Enter' || e.nativeEvent.isComposing) return;
+		e.preventDefault();
+		manualAuthorRef.current?.focus();
 	}
 
 	async function uploadAndSet(file, setUrl) {
@@ -191,14 +202,27 @@ export function AddBookClientPage({username}) {
 					<div className="pt-6 space-y-3">
 						<p className="font-hand text-lg text-muted-foreground">or add it by hand</p>
 						<form onSubmit={handleManualAdd} className="space-y-3">
+							<Input
+								name="title"
+								placeholder="book title"
+								aria-label="book title"
+								enterKeyHint="next"
+								autoComplete="off"
+								value={manualTitle}
+								onChange={(e) => setManualTitle(e.target.value)}
+								onKeyDown={handleTitleKeyDown}
+							/>
 							<div className="flex items-end gap-3">
 								<Input
-									name="title"
-									placeholder="book title"
+									ref={manualAuthorRef}
+									name="author"
+									placeholder="author (optional)"
+									aria-label="author"
 									enterKeyHint="done"
 									autoComplete="off"
-									value={manualTitle}
-									onChange={(e) => setManualTitle(e.target.value)}
+									autoCapitalize="words"
+									value={manualAuthor}
+									onChange={(e) => setManualAuthor(e.target.value)}
 								/>
 								<Button
 									type="submit"

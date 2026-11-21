@@ -85,49 +85,75 @@ export function HeroDoodle({ className }) {
   );
 }
 
+// The reader sitting on a shelf, legs dangling, one hand shading the eyes. Shared by the
+// empty library drawing and the default book cover, so both stay the same figure.
+function ShelfReader() {
+  return (
+    <>
+      {/* legs dangling over the edge */}
+      <path d="M150 86 C152 96 151 106 149 114" />
+      <path d="M149 114 C146 116 142 116 141 114" />
+      <path d="M160 86 C163 95 163 104 162 111" />
+      <path d="M162 111 C160 114 156 114 154 112" />
+      {/* body */}
+      <path
+        d="M141 62 C149 59 163 59 169 63 C171 71 171 81 169 88 C160 91 148 91 141 88 C139 80 139 70 141 62 Z"
+        fill={PAPER}
+      />
+      {/* head + curl */}
+      <path
+        d="M155 36 C163 36 168 42 167 49 C166 56 160 60 154 59 C147 58 143 52 144 46 C145 40 149 36 155 36 Z"
+        fill={PAPER}
+      />
+      <path d="M148 39 C143 35 144 29 149 29 C153 29 153 34 150 35" />
+      {/* arms: one on the knee, one shading the eyes, looking for books */}
+      <path d="M143 68 C138 74 140 82 146 86" />
+      <path d="M167 66 C176 60 178 52 170 47" />
+    </>
+  );
+}
+
+// the accent: a few ticks of searching
+function SearchTicks({ strokeWidth }) {
+  return (
+    <g fill="none" stroke={ACCENT} strokeWidth={strokeWidth} strokeLinecap="round">
+      <path d="M184 40 L191 36" />
+      <path d="M186 50 L194 50" />
+      <path d="M183 31 L187 25" />
+    </g>
+  );
+}
+
 // Empty library: an empty shelf with the reader sitting on it, legs dangling, waiting.
 export function EmptyShelfDoodle({ className }) {
   return (
     <svg viewBox="0 0 260 140" className={className} role="img" aria-label="the tiny reader sitting on an empty shelf">
-      <g
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-       
-      >
+      <g fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
         {/* the shelf and its brackets */}
         <path d="M18 92 C80 90 170 93 242 91" />
         <path d="M46 93 C46 104 52 110 60 112" />
         <path d="M212 93 C212 104 206 110 198 112" />
-        {/* legs dangling over the edge */}
-        <path d="M150 86 C152 96 151 106 149 114" />
-        <path d="M149 114 C146 116 142 116 141 114" />
-        <path d="M160 86 C163 95 163 104 162 111" />
-        <path d="M162 111 C160 114 156 114 154 112" />
-        {/* body */}
-        <path
-          d="M141 62 C149 59 163 59 169 63 C171 71 171 81 169 88 C160 91 148 91 141 88 C139 80 139 70 141 62 Z"
-          fill={PAPER}
-        />
-        {/* head + curl */}
-        <path
-          d="M155 36 C163 36 168 42 167 49 C166 56 160 60 154 59 C147 58 143 52 144 46 C145 40 149 36 155 36 Z"
-          fill={PAPER}
-        />
-        <path d="M148 39 C143 35 144 29 149 29 C153 29 153 34 150 35" />
-        {/* arms: one on the knee, one shading the eyes, looking for books */}
-        <path d="M143 68 C138 74 140 82 146 86" />
-        <path d="M167 66 C176 60 178 52 170 47" />
+        <ShelfReader />
       </g>
-      {/* the accent: a few ticks of searching */}
-      <g fill="none" stroke={ACCENT} strokeWidth="2.2" strokeLinecap="round">
-        <path d="M184 40 L191 36" />
-        <path d="M186 50 L194 50" />
-        <path d="M183 31 L187 25" />
-      </g>
+      <SearchTicks strokeWidth="2.2" />
     </svg>
+  );
+}
+
+// Default cover for a book with no cover image: a hand-drawn cover outline with the shelf
+// reader sitting inside it. Size it with className like the cover <Image> it stands in for.
+export function BookCoverPlaceholder({ className = "" }) {
+  return (
+    <div className={`doodle-box border-muted-foreground/60 flex-shrink-0 flex items-center justify-center overflow-hidden ${className}`}>
+      <svg viewBox="118 16 88 108" className="w-[86%] h-[86%]" aria-hidden>
+        <g fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+          {/* a short stretch of shelf to sit on */}
+          <path d="M122 92 C146 90 178 93 202 91" />
+          <ShelfReader />
+        </g>
+        <SearchTicks strokeWidth="2.8" />
+      </svg>
+    </div>
   );
 }
 

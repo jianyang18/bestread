@@ -13,7 +13,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { BoilText } from "@/components/doodles";
+import { BoilText, BookCoverPlaceholder } from "@/components/doodles";
 import { doodlePaths } from "@/components/doodles/paths";
 import { Input } from "@/components/ui/input";
 import { uploadBookCover } from "@/lib/upload-cover";
@@ -113,7 +113,7 @@ export function EditBookDialog({ book, children }) {
                 className="object-cover flex-shrink-0"
               />
             ) : (
-              <div className="doodle-box w-14 h-[84px] flex-shrink-0 border-muted-foreground/60" />
+              <BookCoverPlaceholder className="w-14 h-[84px]" />
             )}
             <div className="space-y-1.5">
               <p className="text-sm">cover</p>

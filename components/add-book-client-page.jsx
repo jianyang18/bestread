@@ -11,7 +11,7 @@ import {Button} from '@/components/ui/button';
 import {ThemeToggle} from '@/components/theme-toggle';
 import {uploadBookCover} from '@/lib/upload-cover';
 import {toast} from 'sonner';
-import {BoilText} from '@/components/doodles';
+import {BoilText, BookCoverPlaceholder} from '@/components/doodles';
 
 export function AddBookClientPage({username}) {
 	const [query, setQuery] = useState('');
@@ -168,7 +168,7 @@ export function AddBookClientPage({username}) {
 											className="object-cover flex-shrink-0"
 										/>
 									) : (
-										<div className="w-10 h-[60px] flex-shrink-0 doodle-box border-muted-foreground/60" />
+										<BookCoverPlaceholder className="w-10 h-[60px]" />
 									)}
 									<div className="min-w-0">
 										<p className="text-[15px] text-foreground leading-snug">{book.volumeInfo.title}</p>
@@ -219,7 +219,7 @@ export function AddBookClientPage({username}) {
 										className="object-cover flex-shrink-0"
 									/>
 								) : (
-									<div className="w-12 h-[72px] flex-shrink-0 doodle-box border-muted-foreground/60" />
+									<BookCoverPlaceholder className="w-12 h-[72px]" />
 								)}
 								<div className="space-y-1">
 									<input
@@ -265,7 +265,7 @@ export function AddBookClientPage({username}) {
 								className="object-cover flex-shrink-0"
 							/>
 						) : (
-							<div className="w-16 h-[96px] flex-shrink-0 doodle-box border-muted-foreground/60" />
+							<BookCoverPlaceholder className="w-16 h-[96px]" />
 						)}
 						<div className="min-w-0 space-y-1">
 							<p className="text-lg text-foreground leading-snug">{selected.title}</p>

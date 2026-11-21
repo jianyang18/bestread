@@ -14,6 +14,10 @@ export default function OnboardingPage() {
 
   const { execute, isPending } = useAction(onboardingAction, {
     onError: ({ error }) => {
+      if (error.serverError === "unauthorized") {
+        toast.error("preview only: sign in to save a username");
+        return;
+      }
       toast.error(error.serverError || "something went wrong");
     },
   });

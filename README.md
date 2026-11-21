@@ -90,6 +90,10 @@
 
 Navigate to [http://localhost:3000](http://localhost:3000) to access the app.
 
+## Working on the onboarding page
+
+New users land on `/onboarding` once, right after their first sign-in, so it is easy to never see it again. On `npm run dev` and on Vercel preview deployments, `/onboarding` opens without signing in, so you can just go to `http://localhost:3000/onboarding` (or `<preview-url>/onboarding`). Submitting the form there shows a "preview only" note, because saving a username still needs a real login. Production keeps the normal login check.
+
 ## Install on your phone
 
 bestRead is a PWA, so it can live on your home screen and open full screen like an app.

@@ -25,9 +25,7 @@ export default async function HomePage() {
 
 			<section className="space-y-4">
 				<h1 className="text-5xl">book tracking app</h1>
-				<p className="text-muted-foreground leading-[1.9] max-w-md">
-					a minimal book tracking app for people who want to focus on reading, not managing complex features.
-				</p>
+				<p className="text-muted-foreground leading-[1.9] max-w-md">No registration required, just your email</p>
 			</section>
 
 			<EmptyShelfDoodle className="w-52 text-foreground" />
@@ -35,7 +33,7 @@ export default async function HomePage() {
 			<section className="space-y-4 pb-8">
 				<h2 className="text-3xl">ready to start tracking your books?</h2>
 				<Link href="/login" className="doodle-underline is-on accent font-hand text-2xl text-foreground">
-					start tracking for free →
+					start tracking →
 				</Link>
 			</section>
 		</div>

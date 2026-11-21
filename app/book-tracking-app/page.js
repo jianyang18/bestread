@@ -31,8 +31,8 @@ export default function AboutPage() {
 						reading tracker
 					</h1>
 					<p className="text-muted-foreground leading-[1.9] max-w-xs">
-						track your reading progress without distractions. no reviews, no recommendations, no social features.
-						just your books.
+						track your reading progress without distractions. try to make sure it's simple enough so i use it for only
+						one purpose -- track my readings
 					</p>
 				</div>
 				<HeroDoodle className="w-full max-w-[360px] justify-self-end text-foreground" />
@@ -41,12 +41,13 @@ export default function AboutPage() {
 			<section className="space-y-3">
 				<h2 className="text-3xl">what you get?</h2>
 				<ul className="space-y-1 text-sm leading-[1.9]">
-					<li>add books from google books search</li>
-					<li>track reading progress by page or percentage</li>
-					<li>mark books as reading, finished, or want to read</li>
-					<li>rate books you have finished</li>
-					<li>track your reading streak</li>
-					<li>a shareable public library page</li>
+					<li>- add books from (google books api)</li>
+					<li>- track reading progress by page or percentage</li>
+					<li>- mark books as reading, finished, or want to read</li>
+					<li>- track your reading streak</li>
+					<li className="font-hand">
+						- thinking about add a &quot;recommendation&quot; feature but still on the fence
+					</li>
 				</ul>
 			</section>
 

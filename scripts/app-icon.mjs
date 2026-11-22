@@ -21,31 +21,33 @@ export const THEMES = {
 	dark: {paper: '#151513', ink: '#eeede8', accent: '#ebaa48'},
 };
 
-// The tiny reader from the empty-library doodle, sitting on a shelf with a book on the lap,
-// and three tea-amber ticks. Redrawn bold for the home screen: an app icon is seen at ~60px,
-// so it uses a thick pen (about 7% of the canvas) and only a handful of big shapes,
-// to sit well next to Jian's other doodle icons. Drawn directly on the 512 canvas.
+// The reader sitting on a shelf with an open book on the lap, and three amber ticks.
+// Drawn as clean line art to sit beside Jian's other home-screen icons: smooth geometric
+// curves, one even pen, a solid dark hair shape for weight, eyes closed in a calm face.
+// Drawn directly on the 512 canvas.
 
-// pen weights as a share of the 512 canvas
-const PEN = {icon: 26, favicon: 40};
+// pen weights on the 512 canvas
+const PEN = {icon: 14, favicon: 26};
 
-const SHELF = 'M84 352 C180 347 300 353 428 348';
-const BRACKETS = ['M128 356 C128 382 140 396 160 400', 'M386 354 C386 380 374 394 354 398'];
-const LEGS = ['M206 346 C208 370 207 394 204 416 C198 422 186 423 178 419', 'M264 346 C267 368 267 390 265 412 C270 418 282 419 290 415'];
-const BODY = 'M178 240 C210 232 260 232 292 240 C298 272 299 306 294 342 C258 350 212 350 176 342 C170 306 171 272 178 240 Z';
-const HEAD = 'M238 102 C272 102 296 128 295 161 C294 194 268 218 235 217 C202 216 178 190 179 158 C180 126 205 102 238 102 Z';
-const CURL = 'M190 120 C168 108 170 76 194 76 C214 76 218 98 204 104';
-// solid body (it reads at any size) with the open book as a paper shape on the lap
-const BOOK = 'M190 282 C210 273 224 274 235 284 C246 274 260 273 280 282 C280 294 280 306 279 318 C260 310 246 311 235 320 C224 311 210 310 191 318 C191 306 190 294 190 282 Z';
-const SPINE = 'M235 288 L235 314';
-// the one accent: three chunky ticks, the little spark of a good page
-const TICKS = ['M330 128 L348 98', 'M346 170 L380 150', 'M354 214 L392 212'];
+const SHELF = 'M72 368 L440 368';
+const BRACKETS = ['M122 368 Q122 404 156 410', 'M390 368 Q390 404 356 410'];
+const LEGS = ['M234 370 L232 438 Q222 446 208 444', 'M278 370 L280 438 Q290 446 304 444'];
+const BODY = 'M192 262 Q256 238 320 262 L332 366 L180 366 Z';
+const ARMS = ['M196 272 Q168 312 198 334', 'M316 272 Q344 312 314 334'];
+const FACE = 'M256 98 A72 72 0 1 1 255.9 98 Z';
+// the hair: a cap over the top of the head and a round bun, both solid
+const HAIR = 'M187 150 A72 72 0 0 1 325 150 C300 126 212 126 187 150 Z';
+const BUN = 'M256 64 A24 24 0 1 1 255.9 64 Z';
+const EYES = ['M222 190 Q232 198 242 190', 'M270 190 Q280 198 290 190'];
+const BOOK = 'M196 320 Q226 306 256 320 Q286 306 316 320 L316 360 Q286 346 256 360 Q226 346 196 360 Z';
+const PAGES = ['M256 320 L256 360', 'M212 330 Q228 324 242 330', 'M270 330 Q284 324 300 330'];
+const TICKS = ['M352 112 L366 92', 'M364 142 L388 130', 'M368 176 L394 174'];
 
 /**
  * @param {'light'|'dark'} theme
  * @param {{small?: boolean, scale?: number, transparent?: boolean, rounded?: boolean}} opts
  *   small: heavier pen and fewer strokes, for favicons (16-48px)
- *   scale: art size around the centre; 1 keeps every stroke inside the maskable safe circle
+ *   scale: art size around the centre; 0.9 keeps every stroke inside the maskable safe circle
  */
 export function iconSvg(theme, {small = false, scale = 1, transparent = false, rounded = false} = {}) {
 	const {paper, ink, accent} = THEMES[theme];
@@ -62,9 +64,12 @@ ${bg}
 <g transform="${art}" fill="none" stroke="${ink}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round">
 ${p(SHELF)}${small ? '' : BRACKETS.map((d) => p(d)).join('')}
 ${LEGS.map((d) => p(d)).join('')}
-${p(BODY, ` fill="${ink}"`)}
-${p(HEAD, ` fill="${paper}"`)}${small ? '' : p(CURL)}
-${p(BOOK, ` fill="${paper}" stroke="none"`)}${p(SPINE, ` stroke-width="${w * 0.4}"`)}
+${p(BODY, ` fill="${paper}"`)}
+${small ? '' : ARMS.map((d) => p(d)).join('')}
+${p(FACE, ` fill="${paper}"`)}
+${p(HAIR, ` fill="${ink}"`)}${p(BUN, ` fill="${ink}"`)}
+${small ? '' : EYES.map((d) => p(d)).join('')}
+${p(BOOK, ` fill="${paper}"`)}${(small ? PAGES.slice(0, 1) : PAGES).map((d) => p(d)).join('')}
 </g>
 <g transform="${art}" fill="none" stroke="${accent}" stroke-width="${w}" stroke-linecap="round">
 ${(small ? TICKS.slice(1) : TICKS).map((d) => p(d)).join('')}
@@ -77,7 +82,7 @@ ${(small ? TICKS.slice(1) : TICKS).map((d) => p(d)).join('')}
 function adaptiveFaviconSvg() {
 	const L = THEMES.light;
 	const D = THEMES.dark;
-	return iconSvg('light', {small: true, scale: 1.1, transparent: true})
+	return iconSvg('light', {small: true, scale: 1.06, transparent: true})
 		.replace(
 			'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">',
 			`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -97,17 +102,17 @@ export function iconSet() {
 	const files = {};
 	for (const theme of ['light', 'dark']) {
 		const sfx = theme === 'light' ? '' : '-dark';
-		files[`icon${sfx}.svg`] = [iconSvg(theme, {scale: 1.06}), null];
-		files[`icon-192${sfx}.png`] = [iconSvg(theme, {scale: 1.06}), 192];
-		files[`icon-512${sfx}.png`] = [iconSvg(theme, {scale: 1.06}), 512];
+		files[`icon${sfx}.svg`] = [iconSvg(theme, {scale: 1}), null];
+		files[`icon-192${sfx}.png`] = [iconSvg(theme, {scale: 1}), 192];
+		files[`icon-512${sfx}.png`] = [iconSvg(theme, {scale: 1}), 512];
 		// maskable: full bleed, art kept to the inner 80% so any mask shape keeps it whole
-		files[`maskable-192${sfx}.png`] = [iconSvg(theme, {scale: 0.92}), 192];
-		files[`maskable-512${sfx}.png`] = [iconSvg(theme, {scale: 0.92}), 512];
+		files[`maskable-192${sfx}.png`] = [iconSvg(theme, {scale: 0.88}), 192];
+		files[`maskable-512${sfx}.png`] = [iconSvg(theme, {scale: 0.88}), 512];
 		// iOS: opaque, square (iOS rounds the corners itself)
-		files[`apple-touch-icon${sfx}.png`] = [iconSvg(theme, {scale: 1.04}), 180];
+		files[`apple-touch-icon${sfx}.png`] = [iconSvg(theme, {scale: 0.98}), 180];
 		// small pen for tabs
-		files[`favicon-32${sfx}.png`] = [iconSvg(theme, {small: true, scale: 1.1, rounded: true}), 32];
-		files[`favicon-16${sfx}.png`] = [iconSvg(theme, {small: true, scale: 1.1, rounded: true}), 16];
+		files[`favicon-32${sfx}.png`] = [iconSvg(theme, {small: true, scale: 1.06, rounded: true}), 32];
+		files[`favicon-16${sfx}.png`] = [iconSvg(theme, {small: true, scale: 1.06, rounded: true}), 16];
 	}
 	files['favicon.svg'] = [adaptiveFaviconSvg(), null];
 	return files;
